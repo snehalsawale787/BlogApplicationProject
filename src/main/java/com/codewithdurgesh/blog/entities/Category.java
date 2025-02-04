@@ -3,8 +3,6 @@ package com.codewithdurgesh.blog.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.SecondaryRow;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,29 +17,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table (name= "users")
+@Table(name="categories")
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
-
+public class Category {
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+private Integer categoryId;
 	
-	private int id; 
+	@Column(name="title",length=100,nullable=false)
+private String categoryTitle;
 	
-	@Column(name= "user_name" ,nullable =false,length = 100)
-	private String name;
-	
-	
-	private String email;
-	
-	private String password;
-	
-	private String about;
+	@Column(name="description")
+private String categoryDescription;
 	
 	
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	//one person can create many post so we are defining here one to many relationship
+	@OneToMany(mappedBy="category",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Post> posts=new ArrayList<>();
 	
 }
